@@ -6,12 +6,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const pool = new Pool({
-  user: process.env.PGUSER || 'hkuser',
-  host: process.env.PGHOST || 'db',
-  database: process.env.PGDATABASE || 'hkdemo',
-  password: process.env.PGPASSWORD || 'hkpass123',
-  port: Number(process.env.PGPORT) || 5432,
-});
+    user: process.env.PGUSER,
+    host: process.env.PGHOST || 'db',
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: Number(process.env.PGPORT) || 5432,
+  });
+  
 
 // 不碰資料庫的 ping（先確認路由/反代 OK）
 app.get('/api/ping', (_req, res) => res.json({ ok: true, t: Date.now() }));
