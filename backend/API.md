@@ -117,28 +117,16 @@ curl http://localhost/api/map-points/1
 - `lng`: 經度
 
 **查詢參數:**
-<<<<<<< HEAD
-- `radius` (number, optional): 搜尋半徑（公里），預設 5 公里
-=======
 - `radius` (number, optional): 搜尋半徑（公尺），預設 500 公尺
->>>>>>> develop
 - `is_safe` (boolean, optional): 篩選安全性
 
 **範例:**
 ```bash
-<<<<<<< HEAD
-# 搜尋 25.04, 121.55 附近 2 公里內的點
-curl "http://localhost/api/map-points/nearby/25.04/121.55?radius=2"
-
-# 搜尋附近的安全點
-curl "http://localhost/api/map-points/nearby/25.04/121.55?is_safe=true"
-=======
 # 搜尋 25.04, 121.55 附近 1000 公尺內的點
 curl "http://localhost/api/map-points/nearby/25.04/121.55?radius=1000"
 
 # 搜尋附近 200 公尺內的安全點
 curl "http://localhost/api/map-points/nearby/25.04/121.55?radius=200&is_safe=true"
->>>>>>> develop
 ```
 
 **回應範例:**
@@ -149,12 +137,8 @@ curl "http://localhost/api/map-points/nearby/25.04/121.55?radius=200&is_safe=tru
     "latitude": 25.04,
     "longitude": 121.55
   },
-<<<<<<< HEAD
-  "radius": 2,
-=======
   "radius": 1000,
   "unit": "meters",
->>>>>>> develop
   "count": 2,
   "data": [
     {
@@ -163,24 +147,17 @@ curl "http://localhost/api/map-points/nearby/25.04/121.55?radius=200&is_safe=tru
       "latitude": "25.05000000",
       "longitude": "121.55000000",
       "is_safe": false,
-<<<<<<< HEAD
-      "distance": 1.111949266445761
-=======
       "distance": 987.5432
->>>>>>> develop
     }
   ]
 }
 ```
 
-<<<<<<< HEAD
-=======
 **注意事項:**
 - 距離單位為公尺（meters）
 - `distance` 欄位表示該點與中心點的距離（公尺）
 - 結果會依據距離由近到遠排序
 
->>>>>>> develop
 ### 4. 新增地圖點
 **POST /map-points**
 
@@ -348,8 +325,6 @@ curl -X DELETE http://localhost/api/map-points/4
 
 ---
 
-<<<<<<< HEAD
-=======
 ## 障礙物回報 API
 
 ### 回報路障或維修設施
@@ -448,7 +423,6 @@ curl -X POST http://localhost/api/map-points/report-obstacle \
 
 ---
 
->>>>>>> develop
 ## 座標轉換 API
 
 ### 1. TWD97 轉 WGS84
@@ -657,18 +631,6 @@ curl -X POST http://localhost/api/map-points \
     "tags": ["教育", "大學"]
   }'
 
-<<<<<<< HEAD
-# 3. 搜尋附近的地圖點
-curl "http://localhost/api/map-points/nearby/25.0173405/121.5397518?radius=3"
-
-# 4. 更新地圖點的安全性
-curl -X PUT http://localhost/api/map-points/1 \
-  -H "Content-Type: application/json" \
-  -d '{"is_safe": false}'
-
-# 5. 取得所有不安全的點
-curl "http://localhost/api/map-points?is_safe=false"
-=======
 # 3. 搜尋附近的地圖點（500 公尺內）
 curl "http://localhost/api/map-points/nearby/25.0173405/121.5397518?radius=500"
 
@@ -688,5 +650,4 @@ curl "http://localhost/api/map-points?is_safe=false&tag=障礙物"
 curl -X PUT http://localhost/api/map-points/1 \
   -H "Content-Type: application/json" \
   -d '{"is_safe": false}'
->>>>>>> develop
 ```

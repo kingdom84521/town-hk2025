@@ -92,11 +92,7 @@ app.get('/api/map-points/:id', async (req, res) => {
 app.get('/api/map-points/nearby/:lat/:lng', async (req, res) => {
   try {
     const { lat, lng } = req.params;
-<<<<<<< HEAD
-    const { radius = 5, is_safe } = req.query; // radius 預設 5 公里
-=======
     const { radius = 500, is_safe } = req.query; // radius 預設 500 公尺
->>>>>>> develop
 
     const latitude = parseFloat(lat);
     const longitude = parseFloat(lng);
@@ -117,19 +113,11 @@ app.get('/api/map-points/nearby/:lat/:lng', async (req, res) => {
 
     const result = await pool.query(query, params);
 
-<<<<<<< HEAD
-    // 計算距離並篩選
-    const nearbyPoints = result.rows
-      .map(point => ({
-        ...point,
-        distance: calculateDistance(latitude, longitude, parseFloat(point.latitude), parseFloat(point.longitude))
-=======
     // 計算距離並篩選（使用公尺）
     const nearbyPoints = result.rows
       .map(point => ({
         ...point,
         distance: calculateDistance(latitude, longitude, parseFloat(point.latitude), parseFloat(point.longitude), 'm')
->>>>>>> develop
       }))
       .filter(point => point.distance <= parseFloat(radius))
       .sort((a, b) => a.distance - b.distance);
@@ -138,10 +126,7 @@ app.get('/api/map-points/nearby/:lat/:lng', async (req, res) => {
       success: true,
       center: { latitude, longitude },
       radius: parseFloat(radius),
-<<<<<<< HEAD
-=======
       unit: 'meters',
->>>>>>> develop
       count: nearbyPoints.length,
       data: nearbyPoints
     });
@@ -299,8 +284,6 @@ app.delete('/api/map-points/:id', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 // ============ 障礙物回報 API ============
 
 // 回報路障或維修設施（自動標記為不安全點）
@@ -380,7 +363,6 @@ app.post('/api/map-points/report-obstacle', async (req, res) => {
   }
 });
 
->>>>>>> develop
 // ============ 座標轉換 API ============
 
 // TWD97 轉 WGS84

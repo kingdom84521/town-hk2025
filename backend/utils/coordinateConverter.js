@@ -59,25 +59,15 @@ function isValidWgs84(latitude, longitude) {
 }
 
 /**
-<<<<<<< HEAD
- * 計算兩點之間的距離 (公里) - Haversine formula
-=======
  * 計算兩點之間的距離 - Haversine formula
->>>>>>> develop
  * @param {number} lat1 - 第一點緯度
  * @param {number} lon1 - 第一點經度
  * @param {number} lat2 - 第二點緯度
  * @param {number} lon2 - 第二點經度
-<<<<<<< HEAD
- * @returns {number} 距離 (公里)
- */
-function calculateDistance(lat1, lon1, lat2, lon2) {
-=======
  * @param {string} unit - 距離單位 ('km' 或 'm'，預設為 'm')
  * @returns {number} 距離 (公尺或公里)
  */
 function calculateDistance(lat1, lon1, lat2, lon2, unit = 'm') {
->>>>>>> develop
   const R = 6371; // 地球半徑 (公里)
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
@@ -88,13 +78,9 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit = 'm') {
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-<<<<<<< HEAD
-  return R * c;
-=======
   const distanceKm = R * c;
 
   return unit === 'km' ? distanceKm : distanceKm * 1000; // 預設回傳公尺
->>>>>>> develop
 }
 
 function toRad(degrees) {
