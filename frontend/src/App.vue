@@ -1,9 +1,10 @@
 <template>
   <div class="container mx-auto px-2 h-full">
     <GoogleMap ref="locationMap" :api-key="ApiKey" :map-id="MapId" style="width: 100%; height: 100%" :center="center"
-      :zoom="15" gesture-handling="greedy" :disable-default-ui="true" :libraries="['visualization']"
+      :zoom="15" gesture-handling="greedy" :disable-default-ui="true" :libraries="['visualization', 'marker']"
       @center_changed="mapCenterChanged">
-      <div class="location-modal__center-marker" />
+      <AdvancedMarker :options="markerOptions">
+      </AdvancedMarker>
       <!-- <Polyline v-if="pathCoordinates.length > 1" :options="{
         path: pathCoordinates,
         strokeColor: '#FF0000',
@@ -35,7 +36,7 @@
 <script setup>
 import { ref, defineModel, watchEffect, watch, reactive, onMounted, onUnmounted, computed } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
-import { GoogleMap, Polyline, Rectangle } from 'vue3-google-map';
+import { GoogleMap, Polyline, Rectangle, AdvancedMarker } from 'vue3-google-map';
 
 import FloatingButton from './components/FloatingButton.vue';
 import ReportSheet from './components/ReportSheet.vue';
@@ -48,6 +49,7 @@ const MapId = import.meta.env.VITE_GOOGLE_MAP_ID
 
 
 const center = reactive({ lat: 25.0376146, lng: 121.563844 });
+const markerOptions = ref({ position: { lat: 25.0376146, lng: 121.563844 } })
 const locationMap = ref(null);
 const heatmapRef = ref(null);
 const isPanning = ref(false);
@@ -117,6 +119,12 @@ const handleLocation = async (event) => {
       lng: lng.toFixed(7),
       time: timeString
     });
+
+    const position = {
+      lat,
+      lng
+    }
+    markerOptions.value = { position }
 
     console.log('已添加路徑點:', { lat, lng, pathLength: pathCoordinates.value.length });
   }
@@ -407,6 +415,8 @@ const mapCenterChanged = useDebounceFn(async () => {
 
     center.lat = lat;
     center.lng = lng;
+
+    // markerOptions.value = position
 
     // if (data.results.length) {
     //   center.lat = lat;
