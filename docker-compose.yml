@@ -27,6 +27,8 @@ services:
       PGPASSWORD: ${PGPASSWORD}
       PGDATABASE: ${PGDATABASE}
       PORT: 3000
+      HEREAPIKEY: ${HEREAPIKEY}
+      MAPBOXAPIKEY: ${MAPBOXAPIKEY}
     depends_on:
       db:
         condition: service_healthy

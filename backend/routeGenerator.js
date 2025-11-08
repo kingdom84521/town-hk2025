@@ -9,8 +9,8 @@ const fetch = require('node-fetch')
 
 class RouteGenerator {
   constructor(options = {}) {
-    this.mapboxToken = options.mapboxToken
-    this.hereApiKey = options.hereApiKey
+    this.mapboxToken = options.mapboxToken || process.env.MAPBOXAPIKEY
+    this.hereApiKey = options.hereApiKey || process.env.HEREAPIKEY
     this.maxWaypoints = 23
   }
 
