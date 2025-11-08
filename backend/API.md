@@ -1,6 +1,6 @@
 # 地圖點 API 文檔
 
-## 基本資訊
+## 基本資訊  
 
 - 基礎 URL: `http://localhost/api`
 - 所有請求和回應都使用 JSON 格式
