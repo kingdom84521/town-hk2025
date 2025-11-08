@@ -283,6 +283,85 @@ app.delete('/api/map-points/:id', async (req, res) => {
   }
 });
 
+// ============ 障礙物回報 API ============
+
+// 回報路障或維修設施（自動標記為不安全點）
+app.post('/api/map-points/report-obstacle', async (req, res) => {
+  try {
+    let { latitude, longitude, address, obstacle_type, description, metadata = {} } = req.body;
+
+    // 驗證必要欄位：必須提供座標或地址
+    if ((!latitude || !longitude) && !address) {
+      return res.status(400).json({
+        success: false,
+        error: 'Either (latitude and longitude) or (address) must be provided'
+      });
+    }
+
+    // 如果沒有提供經緯度，但有提供地址，則自動進行地理編碼
+    if ((!latitude || !longitude) && address) {
+      try {
+        const geocodeResult = await geocodeAddress(address);
+        latitude = geocodeResult.latitude;
+        longitude = geocodeResult.longitude;
+        address = geocodeResult.displayName || address;
+      } catch (geocodeError) {
+        return res.status(400).json({
+          success: false,
+          error: 'Unable to geocode address. Please provide latitude and longitude, or check the address format.',
+          details: geocodeError.message
+        });
+      }
+    }
+
+    // 驗證座標
+    if (!isValidWgs84(parseFloat(latitude), parseFloat(longitude))) {
+      return res.status(400).json({ success: false, error: 'Invalid coordinates' });
+    }
+
+    // 障礙物類型預設值
+    const obstacleTypeValue = obstacle_type || '其他';
+
+    // 建立障礙物名稱
+    const name = `${obstacleTypeValue}回報`;
+
+    // 設定標籤
+    const tags = ['障礙物', obstacleTypeValue];
+
+    // 儲存額外資訊到 metadata
+    const obstacleMetadata = {
+      ...metadata,
+      obstacle_type: obstacleTypeValue,
+      reported_at: new Date().toISOString()
+    };
+
+    // 插入資料庫（自動設為不安全點）
+    const result = await pool.query(
+      `INSERT INTO map_points (name, description, latitude, longitude, address, is_safe, tags, metadata)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       RETURNING *`,
+      [
+        name,
+        description || `${obstacleTypeValue}回報`,
+        parseFloat(latitude),
+        parseFloat(longitude),
+        address,
+        false, // 自動標記為不安全
+        tags,
+        JSON.stringify(obstacleMetadata)
+      ]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: 'Obstacle reported successfully',
+      data: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // ============ 座標轉換 API ============
 
 // TWD97 轉 WGS84

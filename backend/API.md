@@ -318,6 +318,104 @@ curl -X DELETE http://localhost/api/map-points/4
 
 ---
 
+## 障礙物回報 API
+
+### 回報路障或維修設施
+**POST /map-points/report-obstacle**
+
+簡易回報路障、維修設施或其他障礙物，自動標記為不安全地點。
+
+**請求 Body:**
+```json
+{
+  "latitude": 25.04,
+  "longitude": 121.55,
+  "address": "台北市某地址",
+  "obstacle_type": "路障",
+  "description": "道路施工中",
+  "metadata": {
+    "custom_field": "value"
+  }
+}
+```
+
+**必填欄位:**
+- **必須提供以下其中之一：**
+  - `latitude` + `longitude`: 經緯度座標
+  - `address`: 地址（將自動轉換為座標）
+
+**選填欄位:**
+- `obstacle_type`: 障礙物類型（預設：其他）
+  - 常用類型：路障、維修、施工、道路封閉、其他
+- `description`: 描述
+- `metadata`: 自訂 JSON 資料
+
+**範例 1: 使用經緯度回報**
+```bash
+curl -X POST http://localhost/api/map-points/report-obstacle \
+  -H "Content-Type: application/json" \
+  -d '{
+    "latitude": 25.04,
+    "longitude": 121.55,
+    "obstacle_type": "路障",
+    "description": "道路施工中，預計一週後完工"
+  }'
+```
+
+**範例 2: 使用地址回報**
+```bash
+curl -X POST http://localhost/api/map-points/report-obstacle \
+  -H "Content-Type: application/json" \
+  -d '{
+    "address": "台北101",
+    "obstacle_type": "維修",
+    "description": "電梯維修中"
+  }'
+```
+
+**回應範例:**
+```json
+{
+  "success": true,
+  "message": "Obstacle reported successfully",
+  "data": {
+    "id": 10,
+    "name": "路障回報",
+    "description": "道路施工中，預計一週後完工",
+    "latitude": "25.04000000",
+    "longitude": "121.55000000",
+    "address": null,
+    "is_safe": false,
+    "tags": ["障礙物", "路障"],
+    "metadata": {
+      "obstacle_type": "路障",
+      "reported_at": "2025-11-08T10:30:00.000Z"
+    },
+    "created_at": "2025-11-08T10:30:00.000Z",
+    "updated_at": "2025-11-08T10:30:00.000Z"
+  }
+}
+```
+
+**特性:**
+- 自動標記 `is_safe: false`（不安全點）
+- 自動加入標籤：["障礙物", obstacle_type]
+- 自動記錄回報時間於 `metadata.reported_at`
+- 支援地址自動轉換為座標
+- 可透過 `GET /map-points?is_safe=false&tag=障礙物` 查詢所有障礙物
+
+**錯誤處理:**
+
+如果既沒提供座標也沒提供地址：
+```json
+{
+  "success": false,
+  "error": "Either (latitude and longitude) or (address) must be provided"
+}
+```
+
+---
+
 ## 座標轉換 API
 
 ### 1. TWD97 轉 WGS84
@@ -529,11 +627,20 @@ curl -X POST http://localhost/api/map-points \
 # 3. 搜尋附近的地圖點
 curl "http://localhost/api/map-points/nearby/25.0173405/121.5397518?radius=3"
 
-# 4. 更新地圖點的安全性
+# 4. 回報障礙物
+curl -X POST http://localhost/api/map-points/report-obstacle \
+  -H "Content-Type: application/json" \
+  -d '{
+    "address": "台北101",
+    "obstacle_type": "施工",
+    "description": "外牆清潔中"
+  }'
+
+# 5. 取得所有障礙物回報
+curl "http://localhost/api/map-points?is_safe=false&tag=障礙物"
+
+# 6. 更新地圖點的安全性
 curl -X PUT http://localhost/api/map-points/1 \
   -H "Content-Type: application/json" \
   -d '{"is_safe": false}'
-
-# 5. 取得所有不安全的點
-curl "http://localhost/api/map-points?is_safe=false"
 ```
