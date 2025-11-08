@@ -435,6 +435,235 @@ useHandleConnectionData(handleLocation);
 </script>
 
 <style scoped>
+<<<<<<< HEAD
+.app-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #2c3e50;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 10px 0 0 0;
+  font-size: 1.1em;
+  color: #7f8c8d;
+}
+
+.warning-banner {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.warning-banner h3 {
+  margin-top: 0;
+  color: #856404;
+}
+
+.warning-banner code {
+  background: #ffeaa7;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.warning-banner a {
+  color: #0066cc;
+}
+
+.info-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.info-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.info-card h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.2em;
+}
+
+.info-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.info-card li {
+  margin: 8px 0;
+  color: #34495e;
+}
+
+.marker {
+  font-size: 1.2em;
+  margin-right: 8px;
+}
+
+.marker.green { color: #27ae60; }
+.marker.red { color: #e74c3c; }
+.marker.blue { color: #3498db; }
+.marker.orange { color: #e67e22; }
+.marker.purple { color: #9b59b6; }
+
+.points-manager {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.manager-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.manager-section h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #2c3e50;
+}
+
+.point-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.point-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: white;
+  border-radius: 4px;
+  border-left: 4px solid #3498db;
+}
+
+.point-item.good {
+  border-left-color: #3498db;
+}
+
+.point-item.bad {
+  border-left-color: #e67e22;
+}
+
+.point-item span {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #2c3e50;
+}
+
+.btn-remove {
+  padding: 4px 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: background 0.2s;
+}
+
+.btn-remove:hover {
+  background: #c0392b;
+}
+
+.empty-message {
+  text-align: center;
+  color: #95a5a6;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.add-point {
+  display: flex;
+  gap: 8px;
+}
+
+.add-point input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-add, .btn-add-bad {
+  padding: 8px 16px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.btn-add {
+  background: #3498db;
+}
+
+.btn-add:hover {
+  background: #2980b9;
+}
+
+.btn-add-bad {
+  background: #e67e22;
+}
+
+.btn-add-bad:hover {
+  background: #d35400;
+}
+
+.feature-note {
+  margin-top: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea22 0%, #764ba222 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.feature-note h4 {
+  margin-top: 0;
+  color: #667eea;
+}
+
+.feature-note p {
+  margin-bottom: 0;
+  color: #2c3e50;
+  line-height: 1.6;
+=======
 .container {
   display: flex;
   flex-direction: column;
@@ -456,6 +685,7 @@ useHandleConnectionData(handleLocation);
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+>>>>>>> origin/feature/front
 }
 
 .sim-button:not(:disabled) {
