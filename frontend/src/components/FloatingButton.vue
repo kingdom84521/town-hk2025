@@ -1,23 +1,9 @@
 <template>
-  <button
-    class="floating-button"
-    :class="{ active: isActive }"
-    @click="toggleClick"
-    title="回報狀況"
-  >
-    <svg
-      class="button-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
+  <button class="floating-button" :class="{ active: isActive }" @click="toggleClick" title="回報狀況">
+    <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
       <!-- 報告/信號圖標 -->
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      <!-- 圓點表示活動 -->
-      <circle class="pulse-dot" cx="12" cy="12" r="2" />
     </svg>
   </button>
 </template>
@@ -51,7 +37,6 @@ const toggleClick = () => {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 100;
   font-size: 24px;
 }
@@ -73,7 +58,6 @@ const toggleClick = () => {
 .button-icon {
   width: 28px;
   height: 28px;
-  animation: float 3s ease-in-out infinite;
 }
 
 .floating-button.active .button-icon {
@@ -90,10 +74,12 @@ const toggleClick = () => {
 
 /* 動畫 */
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-5px);
   }
@@ -103,19 +89,23 @@ const toggleClick = () => {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
   }
+
   50% {
     box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
   }
 }
 
 @keyframes blink {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.3;
   }
@@ -125,9 +115,11 @@ const toggleClick = () => {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.3);
   }
+
   100% {
     transform: scale(1);
   }
